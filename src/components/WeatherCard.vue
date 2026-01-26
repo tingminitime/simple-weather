@@ -20,7 +20,6 @@ const {
   isLoading,
   error,
   getCurrentLocation,
-  refetch,
 } = useWeather()
 
 const count = useMotionValue(0)
@@ -29,8 +28,13 @@ const roundedTemperature = useTransform(() => Math.round(count.get()))
 let controls: AnimationPlaybackControls
 
 async function handleRefresh() {
-  await refetch()
-  controls.play()
+  await getCurrentLocation()
+  // Always reinitialize animation on refresh
+  controls?.stop()
+  count.set(0)
+  nextTick(() => {
+    controls = animate(count, temperature.value, { duration: 1.5 })
+  })
 }
 
 onMounted(async () => {
@@ -110,16 +114,16 @@ onUnmounted(() => {
               d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <div>
-            <h3 class="mb-1 font-semibold">
+          <div class="flex flex-col">
+            <h3 class="mb-1 text-start font-semibold">
               發生錯誤
             </h3>
-            <p class="text-sm text-white/90">
+            <p class="text-sm text-black/90">
               {{ error }}
             </p>
             <button
               class="
-                mt-3 rounded-lg bg-white px-4 py-2 text-sm font-medium
+                mt-3 w-fit rounded-lg bg-white px-4 py-2 text-sm font-medium
                 text-blue-600 transition-colors
                 hover:bg-white/90
               "
