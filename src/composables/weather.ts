@@ -72,6 +72,14 @@ export function useWeather() {
   const locationError = ref<string | null>(null)
   const isGettingLocation = ref(false)
 
+  const geolocationPermission = usePermission('geolocation')
+
+  let onDataRefreshedCallback: (() => void) | null = null
+
+  const onDataRefreshed = (callback: () => void) => {
+    onDataRefreshedCallback = callback
+  }
+
   const weatherUrl = import.meta.env.PROD
     ? `${import.meta.env.VITE_OPEN_WEATHER_API_URL}/data/2.5`
     : '/api/weather'
@@ -204,6 +212,19 @@ export function useWeather() {
     }
   }
 
+  // 監聽地理位置權限變化
+  watch(geolocationPermission, async (newState, oldState) => {
+    // 只在權限從非授予狀態變為授予時觸發
+    if (newState === 'granted' && oldState !== 'granted' && locationError.value) {
+      locationError.value = null
+      await getCurrentLocation()
+      // 數據刷新後觸發回調，讓組件重新初始化動畫
+      nextTick(() => {
+        onDataRefreshedCallback?.()
+      })
+    }
+  })
+
   // 格式化溫度
   const temperature = computed(() => {
     if (!weatherData.value?.main)
@@ -305,6 +326,7 @@ export function useWeather() {
     isLoading,
     error,
     getCurrentLocation,
+    onDataRefreshed,
     refetch: () => Promise.all([execute(), executeLocationFetch()]),
   }
 }

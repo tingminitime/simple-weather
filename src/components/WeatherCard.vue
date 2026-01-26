@@ -15,11 +15,11 @@ const {
   visibility,
   weatherIconUrl,
   weatherDescription,
-  cityName,
   fullLocation,
   isLoading,
   error,
   getCurrentLocation,
+  onDataRefreshed,
 } = useWeather()
 
 const count = useMotionValue(0)
@@ -27,9 +27,7 @@ const roundedTemperature = useTransform(() => Math.round(count.get()))
 
 let controls: AnimationPlaybackControls
 
-async function handleRefresh() {
-  await getCurrentLocation()
-  // Always reinitialize animation on refresh
+function initAnimation() {
   controls?.stop()
   count.set(0)
   nextTick(() => {
@@ -37,9 +35,18 @@ async function handleRefresh() {
   })
 }
 
-onMounted(async () => {
+async function handleRefresh() {
   await getCurrentLocation()
-  controls = animate(count, temperature.value, { duration: 1.5 })
+  // Always reinitialize animation on refresh
+  initAnimation()
+}
+
+onMounted(async () => {
+  // 註冊數據刷新回調，用於權限重新授予後重新初始化動畫
+  onDataRefreshed(initAnimation)
+
+  await getCurrentLocation()
+  initAnimation()
 })
 
 onUnmounted(() => {
