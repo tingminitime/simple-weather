@@ -1,3 +1,5 @@
+import type { DateLike } from '@vueuse/core'
+
 interface Coordinates {
   latitude: number
   longitude: number
@@ -71,6 +73,7 @@ export function useWeather() {
   const coordinates = ref<Coordinates | null>(null)
   const locationError = ref<string | null>(null)
   const isGettingLocation = ref(false)
+  const lastUpdatedTime = ref<DateLike>()
 
   const geolocationPermission = usePermission('geolocation')
 
@@ -183,6 +186,9 @@ export function useWeather() {
         execute(),
         executeLocationFetch(),
       ])
+
+      // 成功獲取天氣資訊後更新時間
+      lastUpdatedTime.value = new Date()
     }
     catch (error) {
       let errorMessage = '無法取得您的位置'
@@ -323,6 +329,7 @@ export function useWeather() {
     weatherDescription,
     cityName,
     fullLocation,
+    lastUpdatedTime,
     isLoading,
     error,
     getCurrentLocation,

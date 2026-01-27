@@ -70,6 +70,7 @@ export default antfu(
         'warn',
         {
           detectComponentClasses: true,
+          ignore: ['hide-me'],
         },
       ],
     },

@@ -6,12 +6,14 @@
     <RouterLink
       to="/"
       class="
-        flex items-center justify-center rounded p-1 transition-all
+        flex items-center justify-center rounded-sm p-1 transition-all
         hover:bg-gray-300/50
         dark:hover:bg-gray-700/50
       "
     >
-      <span class="icon-[carbon--home] text-2xl text-gray-700 dark:text-gray-300"></span>
+      <span
+        class="icon-[carbon--home] text-2xl text-gray-700 dark:text-gray-300"
+      ></span>
     </RouterLink>
 
     <Link
@@ -19,13 +21,16 @@
       target="_blank"
       title="GitHub"
       class="
-        flex items-center justify-center rounded p-1 transition-all
+        flex items-center justify-center rounded-sm p-1 transition-all
         hover:bg-gray-300/50
         dark:hover:bg-gray-700/50
       "
     >
       <span
-        class="icon-[carbon--logo-github] text-2xl text-gray-700 dark:text-gray-300"
+        class="
+          icon-[carbon--logo-github] text-2xl text-gray-700
+          dark:text-gray-300
+        "
       ></span>
     </Link>
 

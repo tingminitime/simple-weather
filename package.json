@@ -13,14 +13,17 @@
   },
   "dependencies": {
     "@vueuse/core": "^14.1.0",
+    "html-to-image": "^1.11.13",
     "motion-v": "^1.10.2",
     "pinia": "^3.0.4",
+    "reka-ui": "^2.7.0",
     "vue": "^3.5.27",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.2.0",
     "@iconify-json/carbon": "^1.2.18",
+    "@iconify-json/svg-spinners": "^1.2.4",
     "@iconify/tailwind4": "^1.2.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",

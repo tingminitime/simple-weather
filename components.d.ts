@@ -19,6 +19,7 @@ declare module 'vue' {
     TheInput: typeof import('./src/components/TheInput.vue')['default']
     TheLogos: typeof import('./src/components/TheLogos.vue')['default']
     ThemeSwitcher: typeof import('./src/components/ThemeSwitcher.vue')['default']
+    ToastContainer: typeof import('./src/components/ToastContainer.vue')['default']
     WeatherCard: typeof import('./src/components/WeatherCard.vue')['default']
   }
 }
