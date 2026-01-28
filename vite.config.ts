@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
-    base: '/vue3-starter/',
+    base: '/simple-weather/',
 
     resolve: {
       alias: {

@@ -42,14 +42,14 @@ const { toasts, removeToast } = useToast()
       <div class="flex items-start gap-3">
         <!-- Icon based on type -->
         <span
-          class="shrink-0 text-2xl"
+          class="shrink-0 text-xl"
           :class="{
+            'icon-[carbon--checkmark-filled]': toast.type === 'success',
+            'icon-[carbon--close-filled]': toast.type === 'error',
             'text-green-500': toast.type === 'success',
             'text-red-500': toast.type === 'error',
           }"
-        >
-          {{ toast.type === 'success' ? '✓' : '✕' }}
-        </span>
+        ></span>
 
         <div class="flex-1">
           <ToastTitle class="text-sm font-medium">
