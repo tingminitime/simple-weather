@@ -119,3 +119,49 @@ jobs:
         with:
           push: true
           tags: timini/simple-weather:latest
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [deploy, push-to-dockerhub]
+    if: ${{ success() }}
+    steps:
+      - name: LINE Messaging API Notification
+        run: |
+          echo "✅ 部署成功通知已啟用，但尚未實作。"
+          # data='{
+          #   "to": "'${{ secrets.LINE_USER_ID }}'",
+          #   "messages":[
+          #     {
+          #       "type":"text",
+          #       "text":"✅ 部署成功！\n\nGitHub Pages 和 Docker Hub 均已更新。"
+          #     }
+          #   ]
+          # }'
+          # curl -X POST \
+          #   -H "Content-Type: application/json" \
+          #   -H "Authorization: Bearer ${{ secrets.LINE_MESSAGING_API_TOKEN }}" \
+          #   -d "${data}"\
+          #   https://api.line.me/v2/bot/message/push
+
+  notify-failure:
+    runs-on: ubuntu-latest
+    needs: [deploy, push-to-dockerhub]
+    if: ${{ failure() }}
+    steps:
+      - name: LINE Messaging API Notification
+        run: |
+          echo "❌ 部署失敗通知已啟用，但尚未實作。"
+          # data='{
+          #   "to": "'${{ secrets.LINE_USER_ID }}'",
+          #   "messages":[
+          #     {
+          #       "type":"text",
+          #       "text":"❌ 部署失敗！\n\n請檢查 GitHub Actions 工作流程以了解詳情。"
+          #     }
+          #   ]
+          # }'
+          # curl -X POST \
+          #   -H "Content-Type: application/json" \
+          #   -H "Authorization: Bearer ${{ secrets.LINE_MESSAGING_API_TOKEN }}" \
+          #   -d "${data}"\
+          #   https://api.line.me/v2/bot/message/push
