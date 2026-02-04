@@ -129,15 +129,7 @@ jobs:
         run: |
           echo "執行部署成功通知..."
 
-          # 根據事件類型決定作者資訊
-          if [ "${{ github.event_name }}" == "push" ]; then
-            AUTHOR="${{ github.event.pusher.name }} <${{ github.event.pusher.email }}>"
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            AUTHOR="${{ github.event.pull_request.user.login }}"
-          else
-            AUTHOR="${{ github.actor }}"
-          fi
-
+          AUTHOR="${{ github.actor }}"
           WORKFLOW_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
           data='{
@@ -145,7 +137,7 @@ jobs:
             "messages":[
               {
                 "type":"text",
-                "text":"✅ '${{ github.repository }}'\n狀態：部署成功！GitHub Pages 和 Docker Hub 均已更新\nWorkflow：'"${WORKFLOW_URL}"'\nAuthor：'"${AUTHOR}"'"
+                "text":"專案：'${{ github.repository }}'\n狀態：\n✅部署成功！\n🆗GitHub Pages 已更新\n🆗Docker Hub 已更新\nWorkflow：\n'"${WORKFLOW_URL}"'\nAuthor：'"${AUTHOR}"'"
               }
             ]
           }'
@@ -164,15 +156,7 @@ jobs:
         run: |
           echo "執行部署失敗通知..."
 
-          # 根據事件類型決定作者資訊
-          if [ "${{ github.event_name }}" == "push" ]; then
-            AUTHOR="${{ github.event.pusher.name }} <${{ github.event.pusher.email }}>"
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            AUTHOR="${{ github.event.pull_request.user.login }}"
-          else
-            AUTHOR="${{ github.actor }}"
-          fi
-
+          AUTHOR="${{ github.actor }}"
           WORKFLOW_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
           data='{
@@ -180,7 +164,7 @@ jobs:
             "messages":[
               {
                 "type":"text",
-                "text":"❌ '${{ github.repository }}'\n狀態：部署失敗！請檢查 workflow 以了解詳情\nWorkflow：'"${WORKFLOW_URL}"'\nAuthor：'"${AUTHOR}"'"
+                "text":"專案：'${{ github.repository }}'\n狀態：\n❌部署失敗！請檢查 workflow 以了解詳情\nWorkflow：\n'"${WORKFLOW_URL}"'\nAuthor：'"${AUTHOR}"'"
               }
             ]
           }'
