@@ -55,6 +55,7 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "iconify",
-    "onecall"
+    "onecall",
+    "elif"
   ]
 }
